@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ProgFoncTP4Foot", "ProgFoncTP4Foot\ProgFoncTP4Foot.fsproj", "{362676B8-AB31-4F59-8D9C-ECCBC0FF3AAB}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Tests", "Tests\Tests.fsproj", "{30F4FF81-1AB7-4254-8E49-FE2856D961B2}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "TP4Tests", "TP4Tests\TP4Tests.fsproj", "{0EC3507C-4A9D-4318-82A1-9746DB674EFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +14,9 @@ Global
 		{362676B8-AB31-4F59-8D9C-ECCBC0FF3AAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{362676B8-AB31-4F59-8D9C-ECCBC0FF3AAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{362676B8-AB31-4F59-8D9C-ECCBC0FF3AAB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{30F4FF81-1AB7-4254-8E49-FE2856D961B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{30F4FF81-1AB7-4254-8E49-FE2856D961B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{30F4FF81-1AB7-4254-8E49-FE2856D961B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{30F4FF81-1AB7-4254-8E49-FE2856D961B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EC3507C-4A9D-4318-82A1-9746DB674EFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EC3507C-4A9D-4318-82A1-9746DB674EFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EC3507C-4A9D-4318-82A1-9746DB674EFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EC3507C-4A9D-4318-82A1-9746DB674EFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
