@@ -45,7 +45,24 @@ module TirAuBut =
             
     let playRound (seed : int) =
         (shoot (seed / 3), shoot (seed * 2 / 3))
-    let play5RoundMatch (seed : int) =
-        let roundNumbers = List.init 5 (fun i -> i + 1)
-        roundNumbers |> List.map (fun n -> playRound (seed * n / 5))
+        
+    let PlayNRounds (numberOfRounds : int) (seed : int) =
+        let roundNumbers = List.init numberOfRounds (fun i -> i + 1)
+        roundNumbers |> List.map (fun n -> playRound (seed * n / numberOfRounds))
+        
+    let playOneMoreRound (rounds : (bool*bool) list) (seed : int) =
+        rounds @ [playRound seed]
     
+    let rec playRoundsUntilSomeoneWins (initialRounds : (bool * bool) list) (seed : int) =
+        if isThereAWinner initialRounds then
+            initialRounds
+        else
+            let newRounds = playOneMoreRound initialRounds seed
+            playRoundsUntilSomeoneWins newRounds (seed * 2)
+            
+    let PlayMatch (seed : int) =
+        let initialRounds = PlayNRounds 5 seed
+        if isThereAWinner initialRounds then
+            initialRounds
+        else
+            playRoundsUntilSomeoneWins initialRounds seed

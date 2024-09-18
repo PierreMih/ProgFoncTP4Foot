@@ -108,14 +108,58 @@ type TestClass () =
         Assert.IsTrue(winner.IsNone)
         
     [<TestMethod>]
-    member this.Play5RoundsCanMakeBothTeamsWinAndTie () =
+    member this.PlayNRounds_PlaysNRounds() =
+        let numberOfRounds = 5
+        let rounds = PlayNRounds 5 1
+        Assert.AreEqual(numberOfRounds, rounds.Length)
+        
+    [<TestMethod>]
+    member this.PlayOneMoreRound_AddsOneRound() =
+        let numberOfRounds = 5
+        let rounds = PlayNRounds 5 1
+        let roundsFinal = playOneMoreRound rounds 999
+        Assert.AreEqual(numberOfRounds + 1, roundsFinal.Length)
+        
+    [<TestMethod>]
+    member this.PlayNRoundsCanMakeBothTeamsWinAndTie () =
         let numberOfMatches = 1000
+        let numberOfRoundsPerMatch = 5
         let rand = Random.Shared
-        let Matches = Array.Parallel.init numberOfMatches (fun _ -> play5RoundMatch (rand.Next()))
+        let Matches = Array.Parallel.init numberOfMatches (fun _ -> PlayNRounds numberOfRoundsPerMatch (rand.Next()))
         let MatchesAsParallel = Matches.AsParallel()
         let Team1CanWin = MatchesAsParallel.Any(fun onematch -> (getWinner onematch).IsSome && (getWinner onematch).Value = "Team 1")
         let Team2CanWin = MatchesAsParallel.Any(fun onematch -> (getWinner onematch).IsSome && (getWinner onematch).Value = "Team 2")
         let CanTie = MatchesAsParallel.Any(fun onematch -> (getWinner onematch).IsNone)
         Assert.IsTrue(Team1CanWin && Team2CanWin && CanTie)
-        
     
+    [<TestMethod>]
+    member this.PlayMatch_PlaysAtLeast5Rounds () =
+        let rand = Random()
+        let mmatch = PlayMatch (rand.Next())
+        Assert.IsTrue(mmatch.Length >= 5)
+    
+    [<TestMethod>]
+    member this.PlayMatchCanMakeBothTeamsWinButNotTie () =
+        let numberOfMatches = 1000
+        let rand = Random.Shared
+        let Matches = Array.Parallel.init numberOfMatches (fun _ -> PlayMatch (rand.Next()))
+        let MatchesAsParallel = Matches.AsParallel()
+        let Team1CanWin = MatchesAsParallel.Any(fun onematch -> (getWinner onematch).IsSome && (getWinner onematch).Value = "Team 1")
+        let Team2CanWin = MatchesAsParallel.Any(fun onematch -> (getWinner onematch).IsSome && (getWinner onematch).Value = "Team 2")
+        let CanTie = MatchesAsParallel.Any(fun onematch -> (getWinner onematch).IsNone)
+        Assert.IsTrue(Team1CanWin && Team2CanWin && not CanTie)
+        
+    [<TestMethod>]
+    member this.PlayMatchCanMakeMatchesOfDifferentDurations () =
+        let numberOfMatches = 1000
+        let rand = Random.Shared
+        let Matches = Array.Parallel.init numberOfMatches (fun _ -> PlayMatch (rand.Next()))
+        let MatchesAsParallel = Matches.AsParallel()
+        let MinMatchLength = MatchesAsParallel.Min<(bool*bool) list, int>(_.Length)
+        let MaxMatchLength = MatchesAsParallel.Max<(bool*bool) list, int>(_.Length)
+        let AverageMatchLength = MatchesAsParallel.Average(_.Length)
+        
+        Assert.AreEqual(5, MinMatchLength)
+        Assert.AreNotEqual(5, MaxMatchLength)
+        Assert.AreNotEqual(MinMatchLength, MaxMatchLength)
+        Assert.IsTrue(AverageMatchLength > 5)
