@@ -25,17 +25,23 @@ module TirAuBut =
     let getWinnerScore (shotsList : (bool*bool) list) =
         let score1 = getScoreFirstTeam shotsList
         let score2 = getScoreSecondTeam shotsList
-        max score1 score2
+        if score1 = score2 then
+            None
+        else
+            Some(max score1 score2)
     
     let getWinner (shotsList : (bool*bool) list) =
         if isThereAWinner shotsList then
             let winnerScore = getWinnerScore shotsList
-            if getScoreFirstTeam shotsList = winnerScore then
-                "Team 1"
+            if winnerScore.IsSome then
+                if getScoreFirstTeam shotsList = winnerScore.Value then
+                    Some("Team 1")
+                else
+                    Some("Team 2")
             else
-                "Team 2"
+                None
         else
-            "Aucune Team"
+            None
             
     let playRound (seed : int) =
         (shoot (seed / 3), shoot (seed * 2 / 3))

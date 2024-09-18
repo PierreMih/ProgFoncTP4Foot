@@ -7,7 +7,7 @@
         <GenerateProgramFile>false</GenerateProgramFile>
         <IsTestProject>true</IsTestProject>
     </PropertyGroup>
-
+    
     <ItemGroup>
         <Compile Include="Tests.fs"/>
         <Compile Include="Program.fs"/>
@@ -20,4 +20,8 @@
         <PackageReference Include="coverlet.collector" Version="6.0.0"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\ProgFoncTP4Foot\ProgFoncTP4Foot.fsproj" />
+    </ItemGroup>
+    
 </Project>
