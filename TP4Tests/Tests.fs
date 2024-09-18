@@ -108,11 +108,14 @@ type TestClass () =
         Assert.IsTrue(winner.IsNone)
         
     [<TestMethod>]
-    member this.PlayRoundCanReturnBothValues () =
+    member this.Play5RoundsCanMakeBothTeamsWinAndTie () =
+        let numberOfMatches = 1000
         let rand = Random.Shared
-        let rounds = Array.Parallel.init numberOfTries (fun _ -> playRound (rand.Next()))
-        let successList = tries.AsParallel().Where(fun b -> b = true)
-        let failureList = tries.AsParallel().Where(fun b -> b = false)
-        let areThereSuccess = successList.Any()
-        let areThereFailures = failureList.Any()
-        Assert.IsTrue(areThereSuccess && areThereFailures)
+        let Matches = Array.Parallel.init numberOfMatches (fun _ -> play5RoundMatch (rand.Next()))
+        let MatchesAsParallel = Matches.AsParallel()
+        let Team1CanWin = MatchesAsParallel.Any(fun onematch -> (getWinner onematch).IsSome && (getWinner onematch).Value = "Team 1")
+        let Team2CanWin = MatchesAsParallel.Any(fun onematch -> (getWinner onematch).IsSome && (getWinner onematch).Value = "Team 2")
+        let CanTie = MatchesAsParallel.Any(fun onematch -> (getWinner onematch).IsNone)
+        Assert.IsTrue(Team1CanWin && Team2CanWin && CanTie)
+        
+    
