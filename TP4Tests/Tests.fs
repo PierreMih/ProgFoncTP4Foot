@@ -144,9 +144,11 @@ type TestClass () =
         let rand = Random.Shared
         let Matches = Array.Parallel.init numberOfMatches (fun _ -> PlayMatch (rand.Next()))
         let MatchesAsParallel = Matches.AsParallel()
+        
         let Team1CanWin = MatchesAsParallel.Any(fun onematch -> (getWinner onematch).IsSome && (getWinner onematch).Value = "Team 1")
         let Team2CanWin = MatchesAsParallel.Any(fun onematch -> (getWinner onematch).IsSome && (getWinner onematch).Value = "Team 2")
         let CanTie = MatchesAsParallel.Any(fun onematch -> (getWinner onematch).IsNone)
+        
         Assert.IsTrue(Team1CanWin && Team2CanWin && not CanTie)
         
     [<TestMethod>]
@@ -155,6 +157,7 @@ type TestClass () =
         let rand = Random.Shared
         let Matches = Array.Parallel.init numberOfMatches (fun _ -> PlayMatch (rand.Next()))
         let MatchesAsParallel = Matches.AsParallel()
+        
         let MinMatchLength = MatchesAsParallel.Min<(bool*bool) list, int>(_.Length)
         let MaxMatchLength = MatchesAsParallel.Max<(bool*bool) list, int>(_.Length)
         let AverageMatchLength = MatchesAsParallel.Average(_.Length)
